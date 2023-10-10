@@ -16,6 +16,7 @@ import com.dviss.currencyrates.ui.AppViewModel
 import com.dviss.currencyrates.ui.components.MyBottomBar
 import com.dviss.currencyrates.ui.components.MyTopAppBar
 import com.dviss.currencyrates.ui.screen.CurrenciesScreen
+import com.dviss.currencyrates.ui.screen.FavouritesScreen
 import com.dviss.currencyrates.ui.screen.FilterScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,7 +33,7 @@ fun AppNavigation() {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            MyTopAppBar(viewModel = viewModel, navController = navController)
+            MyTopAppBar(navController = navController)
         },
         bottomBar = {
             MyBottomBar(navController = navController)
@@ -47,7 +48,7 @@ fun AppNavigation() {
                 CurrenciesScreen(navController, viewModel)
             }
             composable(Route.FAVOURITES) {
-
+                FavouritesScreen(viewModel)
             }
             composable(Route.FILTERS) {
                 FilterScreen(navController, viewModel)

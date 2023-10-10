@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Currency Rates</string>
 
+    <!-- Top App Bar titles -->
+    <string name="tab_title_currencies">Currencies</string>
+    <string name="tab_title_favourites">Favourites</string>
+    <string name="tab_title_filter">Filter</string>
+
     <!-- Navigation Bar labels -->
     <string name="nav_bar_currencies">Currencies</string>
     <string name="nav_bar_favourites">Favourites</string>
@@ -16,5 +21,6 @@
     <string name="sort_by">SORT BY</string>
 
     <!-- Icon Descriptions -->
-    <string name="icon_description_wallet">Wallet</string>
+    <string name="icon_description_arrow_dropdown">currency selector</string>
+    <string name="icon_description_arrow_close_dropdown">close currency selector</string>
 </resources>

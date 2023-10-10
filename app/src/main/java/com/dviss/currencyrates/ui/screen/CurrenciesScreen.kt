@@ -38,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -90,7 +91,7 @@ fun CurrenciesScreen(
                     IconButton(onClick = { expanded = true }) {
                         Icon(
                             Icons.Default.KeyboardArrowDown,
-                            contentDescription = "dropdown menu",
+                            contentDescription = stringResource(id = R.string.icon_description_arrow_dropdown),
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }
@@ -129,6 +130,7 @@ fun CurrenciesScreen(
                             state.mainCurrency,
                             currency.code
                         ) in state.favourites,
+                        mainCurrencyRate = state.mainCurrencyRate,
                         modifier = Modifier.padding(top = 8.dp),
                         onAddToFavouritesClick = {
                             viewModel.addFavouritePair(
@@ -197,7 +199,7 @@ fun CurrenciesScreen(
                             IconButton(onClick = { expanded = false }) {
                                 Icon(
                                     Icons.Default.KeyboardArrowUp,
-                                    contentDescription = "close dropdown menu",
+                                    contentDescription = stringResource(id = R.string.icon_description_arrow_close_dropdown),
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                             }
@@ -239,6 +241,7 @@ fun CurrenciesScreen(
 @Composable
 fun CurrencyListItem(
     currency: Currency,
+    mainCurrencyRate: Double,
     isFavourite: Boolean,
     modifier: Modifier = Modifier,
     onAddToFavouritesClick: () -> Unit,
@@ -253,7 +256,10 @@ fun CurrencyListItem(
     ) {
         Text(text = currency.code)
         Spacer(modifier = Modifier.weight(1f))
-        Text(text = currency.rate.toString(), fontWeight = FontWeight.SemiBold)
+        Text(
+            text = "%.6f".format(currency.rate / mainCurrencyRate),
+            fontWeight = FontWeight.SemiBold
+        )
         if (isFavourite) {
             IconButton(onClick = { onRemoveFromFavouritesClick() }) {
                 Icon(

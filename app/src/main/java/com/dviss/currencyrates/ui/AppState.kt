@@ -9,4 +9,7 @@ data class AppState(
     val favourites: List<FavouritePair> = emptyList(),
     val filter: Filter = Filter.CODE_A_Z,
     val mainCurrency: String = ""
-)
+) {
+    val mainCurrencyRate =
+        currencies.firstOrNull { it.code == mainCurrency }?.rate ?: 1.0
+}

@@ -10,38 +10,35 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.dviss.currencyrates.R
-import com.dviss.currencyrates.ui.AppViewModel
 import com.dviss.currencyrates.ui.navigation.Route
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyTopAppBar(
-    viewModel: AppViewModel = hiltViewModel(),
+    // viewModel: AppViewModel = hiltViewModel(),
     navController: NavController
 ) {
     //state of current navigation route
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route ?: Route.CURRENCIES
 
-    // state
-    val state by viewModel.appState.collectAsState()
-
-    val title =
-        if (currentRoute == Route.CURRENCIES) {
-            "Currencies"
-        } else if (currentRoute == Route.FAVOURITES) {
-            "Favourites"
-        } else {
-            "Filters"
+    val title = when (currentRoute) {
+        Route.CURRENCIES -> {
+            stringResource(id = R.string.tab_title_currencies)
         }
+        Route.FAVOURITES -> {
+            stringResource(id = R.string.tab_title_favourites)
+        }
+        Route.FILTERS -> {
+            stringResource(id = R.string.tab_title_filter)
+        }
+        else -> {""}
+    }
 
     TopAppBar(
         title = {
