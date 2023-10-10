@@ -5,5 +5,6 @@ import com.dviss.currencyrates.domain.model.Filter
 
 data class UserPreferences(
     val filter: Filter,
-    val favourites: List<FavouritePair>
+    val favourites: List<FavouritePair>,
+    val mainCurrency: String
 )

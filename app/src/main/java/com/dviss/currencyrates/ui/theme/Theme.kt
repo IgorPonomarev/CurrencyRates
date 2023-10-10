@@ -24,7 +24,7 @@ private val DarkColorScheme = darkColorScheme(
     onSurface = textSecondary,
     outline = outline,
     tertiary = yellow,
-    background = default,
+    background = defaultColor,
     secondaryContainer = card,
     tertiaryContainer = header
 )
@@ -38,7 +38,7 @@ private val LightColorScheme = lightColorScheme(
     onSurface = textSecondary,
     outline = outline,
     tertiary = yellow,
-    background = default,
+    background = defaultColor,
     secondaryContainer = card,
     tertiaryContainer = header
 
@@ -57,7 +57,7 @@ private val LightColorScheme = lightColorScheme(
 fun CurrencyRatesTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -73,8 +73,10 @@ fun CurrencyRatesTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+            window.statusBarColor = colorScheme.tertiaryContainer.toArgb()
+            window.navigationBarColor = colorScheme.background.toArgb()
+
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = true
         }
     }
 

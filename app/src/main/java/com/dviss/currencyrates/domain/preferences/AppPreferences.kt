@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface AppPreferences {
     suspend fun saveFilter(filter: Filter)
+    suspend fun saveMainCurrency(code: String)
     suspend fun saveFavourites(favourites: List<FavouritePair>)
     fun getPreferences(): Flow<UserPreferences>
 }

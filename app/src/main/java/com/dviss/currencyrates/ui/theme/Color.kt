@@ -11,6 +11,6 @@ val textSecondary = Color(0xFF767676)
 val outline = Color(0xFFEBEBEB)
 val yellow = Color(0xFFFFB800)
 
-val default = Color(0xFFFFFFFF)
+val defaultColor = Color(0xFFFFFFFF)
 val header = Color(0xFFF6F6F6)
 val card = Color(0xFFF0F2F8)

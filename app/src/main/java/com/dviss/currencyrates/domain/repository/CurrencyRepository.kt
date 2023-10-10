@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface CurrencyRepository {
 
-    suspend fun getCurrencyRates(): Flow<List<Currency>>
+    fun getCurrencyRates(): Flow<List<Currency>>
     suspend fun updateCurrencyRates(): NetworkResponse
 
 }
