@@ -21,6 +21,9 @@
     <string name="sort_by">SORT BY</string>
 
     <!-- Icon Descriptions -->
+    <string name="icon_description_filter">filter</string>
     <string name="icon_description_arrow_dropdown">currency selector</string>
     <string name="icon_description_arrow_close_dropdown">close currency selector</string>
+    <string name="icon_description_add_to_favourites">add to favourites</string>
+    <string name="icon_description_remove_from_favourites">remove from favourites</string>
 </resources>

@@ -1,7 +1,9 @@
 package com.dviss.currencyrates.ui.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -46,14 +49,14 @@ fun FavouritesScreen(
         )
         LazyColumn(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 8.dp, bottom = 8.dp, start = 16.dp, end = 16.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(16.dp)
         ) {
             items(state.favourites) {
                 FavouritePairListItem(
                     favouritePair = it,
                     currencies = state.currencies,
-                    modifier = Modifier.padding(top = 8.dp)
                 ) {
                     viewModel.removeFavouritePair(it)
                 }
@@ -98,7 +101,7 @@ fun FavouritePairListItem(
         IconButton(onClick = { onRemoveFromFavouritesClick() }) {
             Icon(
                 painter = painterResource(id = R.drawable.icon_favourite),
-                contentDescription = "remove from favourites",
+                contentDescription = stringResource(id = R.string.icon_description_remove_from_favourites),
                 tint = MaterialTheme.colorScheme.tertiary
             )
         }

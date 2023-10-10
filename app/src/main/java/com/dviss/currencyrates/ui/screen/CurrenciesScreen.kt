@@ -7,6 +7,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -111,7 +112,7 @@ fun CurrenciesScreen(
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.icon_filter),
-                            contentDescription = "filter",
+                            contentDescription = stringResource(id = R.string.icon_description_filter),
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }
@@ -119,9 +120,8 @@ fun CurrenciesScreen(
             }
             Divider(color = MaterialTheme.colorScheme.outline)
             LazyColumn(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .padding(vertical = 8.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(16.dp)
             ) {
                 items(filteredCurrencies) { currency ->
                     CurrencyListItem(
@@ -131,7 +131,6 @@ fun CurrenciesScreen(
                             currency.code
                         ) in state.favourites,
                         mainCurrencyRate = state.mainCurrencyRate,
-                        modifier = Modifier.padding(top = 8.dp),
                         onAddToFavouritesClick = {
                             viewModel.addFavouritePair(
                                 FavouritePair(
@@ -247,6 +246,10 @@ fun CurrencyListItem(
     onAddToFavouritesClick: () -> Unit,
     onRemoveFromFavouritesClick: () -> Unit
 ) {
+    val rate = remember(currency, mainCurrencyRate) {
+        currency.rate / mainCurrencyRate
+    }
+
     Row(
         modifier = modifier
             .clip(RoundedCornerShape(12.dp))
@@ -257,14 +260,14 @@ fun CurrencyListItem(
         Text(text = currency.code)
         Spacer(modifier = Modifier.weight(1f))
         Text(
-            text = "%.6f".format(currency.rate / mainCurrencyRate),
+            text = "%.6f".format(rate),
             fontWeight = FontWeight.SemiBold
         )
         if (isFavourite) {
             IconButton(onClick = { onRemoveFromFavouritesClick() }) {
                 Icon(
                     painter = painterResource(id = R.drawable.icon_favourite),
-                    contentDescription = "add to favourite",
+                    contentDescription = stringResource(id = R.string.icon_description_remove_from_favourites),
                     tint = MaterialTheme.colorScheme.tertiary
                 )
             }
@@ -272,7 +275,7 @@ fun CurrencyListItem(
             IconButton(onClick = { onAddToFavouritesClick() }) {
                 Icon(
                     painter = painterResource(id = R.drawable.icon_favourite_outline),
-                    contentDescription = "add to favourite",
+                    contentDescription = stringResource(id = R.string.icon_description_add_to_favourites),
                     tint = MaterialTheme.colorScheme.secondary
                 )
             }
