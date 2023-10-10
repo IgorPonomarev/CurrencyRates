@@ -66,6 +66,12 @@ fun CurrenciesScreen(
         mutableStateOf(viewModel.filteredCurrencies())
     }
 
+    val inFavourites = remember(state.currencies, state.favourites, state.mainCurrencyRate) {
+        state.currencies.associate {
+            it.code to (FavouritePair(state.mainCurrency, it.code) in state.favourites)
+        }
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         Column() {
             Row(
@@ -84,7 +90,10 @@ fun CurrenciesScreen(
                             RoundedCornerShape(8.dp)
                         )
                         .background(MaterialTheme.colorScheme.background)
-                        .padding(start = 16.dp),
+                        .padding(start = 16.dp)
+                        .clickable {
+                            expanded = true
+                        },
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
@@ -123,13 +132,13 @@ fun CurrenciesScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 contentPadding = PaddingValues(16.dp)
             ) {
-                items(filteredCurrencies) { currency ->
+                items(
+                    items = filteredCurrencies,
+                    key = { it.code }
+                ) { currency ->
                     CurrencyListItem(
                         currency = currency,
-                        isFavourite = FavouritePair(
-                            state.mainCurrency,
-                            currency.code
-                        ) in state.favourites,
+                        isFavourite = inFavourites[currency.code] ?: false,
                         mainCurrencyRate = state.mainCurrencyRate,
                         onAddToFavouritesClick = {
                             viewModel.addFavouritePair(
@@ -187,10 +196,10 @@ fun CurrenciesScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(48.dp)
-                                .padding(start = 16.dp, bottom = 8.dp, top = 8.dp)
                                 .clickable {
                                     expanded = false
-                                },
+                                }
+                                .padding(start = 16.dp, bottom = 8.dp, top = 8.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
@@ -218,11 +227,11 @@ fun CurrenciesScreen(
                                     modifier = selectedModifier
                                         .fillMaxWidth()
                                         .height(56.dp)
-                                        .padding(horizontal = 16.dp, vertical = 8.dp)
                                         .clickable {
                                             viewModel.updateMainCurrency(it.code)
                                             expanded = false
-                                        },
+                                        }
+                                        .padding(horizontal = 16.dp, vertical = 8.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(text = it.code)
