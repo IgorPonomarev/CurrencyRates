@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.dviss.currencyrates.R
@@ -21,31 +22,33 @@ fun MyBottomBar(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route ?: Route.CURRENCIES
-    NavigationBar(
-        containerColor = MaterialTheme.colorScheme.background,
-        contentColor = MaterialTheme.colorScheme.primary
-    ) {
-        Route.bottomBarRoutes.forEachIndexed { index, route ->
-            NavigationBarItem(
-                icon = { GetNavigationBarIcon(route = route) },
-                label = { GetNavigationBarLabel(route = route) },
-                selected = currentRoute == route,
-                onClick = {
-                    navController.navigate(route) {
-                        popUpTo(route) {
-                            inclusive = true
-                        }
+    if (currentRoute == Route.CURRENCIES || currentRoute == Route.FAVOURITES) {
+        NavigationBar(
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.primary
+        ) {
+            Route.bottomBarRoutes.forEachIndexed { index, route ->
+                NavigationBarItem(
+                    icon = { GetNavigationBarIcon(route = route) },
+                    label = { Text(text = getNavigationBarLabel(route = route)) },
+                    selected = currentRoute == route,
+                    onClick = {
+                        navController.navigate(route) {
+                            popUpTo(route) {
+                                inclusive = true
+                            }
 
-                    }
-                },
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = MaterialTheme.colorScheme.primary,
-                    selectedTextColor = MaterialTheme.colorScheme.onBackground,
-                    indicatorColor = MaterialTheme.colorScheme.primaryContainer,
-                    unselectedIconColor = MaterialTheme.colorScheme.secondary,
-                    unselectedTextColor = MaterialTheme.colorScheme.secondary
+                        }
+                    },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.onBackground,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer,
+                        unselectedIconColor = MaterialTheme.colorScheme.secondary,
+                        unselectedTextColor = MaterialTheme.colorScheme.secondary
+                    )
                 )
-            )
+            }
         }
     }
 }
@@ -56,28 +59,23 @@ fun GetNavigationBarIcon(route: String) {
         Route.CURRENCIES -> {
             Icon(
                 painter = painterResource(id = R.drawable.icon_wallet),
-                contentDescription = "currencies icon"
+                contentDescription = null
             )
         }
         Route.FAVOURITES -> {
             Icon(
                 painter = painterResource(id = R.drawable.icon_favourite),
-                contentDescription = "favourites icon"
+                contentDescription = null
             )
         }
     }
 }
 
 @Composable
-fun GetNavigationBarLabel(route: String) {
-//    when (route) {
-//        Route.CURRENCIES -> {
-//            val label = Route.CURRENCIES[0].uppercase() + Route.CURRENCIES.substring(1)
-//            Text(text = label)
-//        }
-//        Route.FAVOURITES -> {
-//            Text(text = Route.FAVOURITES)
-//        }
-//    }
-    Text(text = route[0].uppercase() + route.substring(1))
+fun getNavigationBarLabel(route: String): String {
+    return when (route) {
+        Route.CURRENCIES -> stringResource(id = R.string.nav_bar_currencies)
+        Route.FAVOURITES -> stringResource(id = R.string.nav_bar_favourites)
+        else -> ""
+    }
 }

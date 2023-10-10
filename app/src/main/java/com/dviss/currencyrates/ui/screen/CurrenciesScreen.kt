@@ -41,21 +41,28 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.dviss.currencyrates.R
 import com.dviss.currencyrates.domain.model.Currency
 import com.dviss.currencyrates.domain.model.FavouritePair
 import com.dviss.currencyrates.ui.AppViewModel
+import com.dviss.currencyrates.ui.navigation.Route
 
 @Composable
 fun CurrenciesScreen(
-    viewmodel: AppViewModel = hiltViewModel()
+    navController: NavController,
+    viewModel: AppViewModel = hiltViewModel()
 ) {
-    val state by viewmodel.appState.collectAsState()
+    val state by viewModel.appState.collectAsState()
 
     var expanded by rememberSaveable {
         mutableStateOf(false)
     }
     val interactionSource = remember { MutableInteractionSource() }
+
+    val filteredCurrencies by remember(state.currencies, state.filter) {
+        mutableStateOf(viewModel.filteredCurrencies())
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column() {
@@ -99,7 +106,7 @@ fun CurrenciesScreen(
                         .background(MaterialTheme.colorScheme.background)
                 ) {
                     IconButton(onClick = {
-                        //TODO
+                        navController.navigate(Route.FILTERS)
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.icon_filter),
@@ -115,7 +122,7 @@ fun CurrenciesScreen(
                     .padding(horizontal = 16.dp)
                     .padding(vertical = 8.dp)
             ) {
-                items(state.currencies) { currency ->
+                items(filteredCurrencies) { currency ->
                     CurrencyListItem(
                         currency = currency,
                         isFavourite = FavouritePair(
@@ -124,7 +131,7 @@ fun CurrenciesScreen(
                         ) in state.favourites,
                         modifier = Modifier.padding(top = 8.dp),
                         onAddToFavouritesClick = {
-                            viewmodel.addFavouritePair(
+                            viewModel.addFavouritePair(
                                 FavouritePair(
                                     state.mainCurrency,
                                     currency.code
@@ -132,7 +139,7 @@ fun CurrenciesScreen(
                             )
                         },
                         onRemoveFromFavouritesClick = {
-                            viewmodel.removeFavouritePair(
+                            viewModel.removeFavouritePair(
                                 FavouritePair(
                                     state.mainCurrency,
                                     currency.code
@@ -212,7 +219,7 @@ fun CurrenciesScreen(
                                         .height(56.dp)
                                         .padding(horizontal = 16.dp, vertical = 8.dp)
                                         .clickable {
-                                            viewmodel.updateMainCurrency(it.code)
+                                            viewModel.updateMainCurrency(it.code)
                                             expanded = false
                                         },
                                     verticalAlignment = Alignment.CenterVertically

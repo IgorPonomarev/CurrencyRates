@@ -16,6 +16,7 @@ import com.dviss.currencyrates.ui.AppViewModel
 import com.dviss.currencyrates.ui.components.MyBottomBar
 import com.dviss.currencyrates.ui.components.MyTopAppBar
 import com.dviss.currencyrates.ui.screen.CurrenciesScreen
+import com.dviss.currencyrates.ui.screen.FilterScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,13 +44,13 @@ fun AppNavigation() {
             modifier = Modifier.padding(paddingValues)
         ) {
             composable(Route.CURRENCIES) {
-                CurrenciesScreen(viewModel)
+                CurrenciesScreen(navController, viewModel)
             }
             composable(Route.FAVOURITES) {
 
             }
             composable(Route.FILTERS) {
-
+                FilterScreen(navController, viewModel)
             }
         }
     }

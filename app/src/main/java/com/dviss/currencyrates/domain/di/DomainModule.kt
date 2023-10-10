@@ -3,6 +3,7 @@ package com.dviss.currencyrates.domain.di
 import com.dviss.currencyrates.domain.preferences.AppPreferences
 import com.dviss.currencyrates.domain.repository.CurrencyRepository
 import com.dviss.currencyrates.domain.usecase.AppUseCases
+import com.dviss.currencyrates.domain.usecase.FilterCurrencies
 import com.dviss.currencyrates.domain.usecase.GetCurrencies
 import com.dviss.currencyrates.domain.usecase.GetUserPreferences
 import com.dviss.currencyrates.domain.usecase.SaveFavourites
@@ -31,7 +32,8 @@ class DomainModule {
             saveFavourites = SaveFavourites(preferences),
             setFilter = SetFilter(preferences),
             saveMainCurrency = SaveMainCurrency(preferences),
-            updateRates = UpdateRates(repository)
+            updateRates = UpdateRates(repository),
+            filterCurrencies = FilterCurrencies()
         )
     }
 }

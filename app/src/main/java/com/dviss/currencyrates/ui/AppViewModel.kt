@@ -2,6 +2,7 @@ package com.dviss.currencyrates.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dviss.currencyrates.domain.model.Currency
 import com.dviss.currencyrates.domain.model.FavouritePair
 import com.dviss.currencyrates.domain.model.Filter
 import com.dviss.currencyrates.domain.usecase.AppUseCases
@@ -68,5 +69,9 @@ class AppViewModel @Inject constructor(
         viewModelScope.launch {
             useCases.saveMainCurrency(code)
         }
+    }
+
+    fun filteredCurrencies(): List<Currency> {
+        return useCases.filterCurrencies(appState.value.currencies, appState.value.filter)
     }
 }

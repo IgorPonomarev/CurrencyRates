@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Currency Rates</string>
+
+    <!-- Navigation Bar labels -->
+    <string name="nav_bar_currencies">Currencies</string>
+    <string name="nav_bar_favourites">Favourites</string>
+
+    <!-- Filter names to display on filter screen -->
+    <string name="filter_code_a_z">Code A-Z</string>
+    <string name="filter_code_z_a">Code Z-A</string>
+    <string name="filter_quote_asc">Quote Asc.</string>
+    <string name="filter_quote_desc">Quote Desc.</string>
+
+    <!-- Filter screen -->
+    <string name="apply">Apply</string>
+    <string name="sort_by">SORT BY</string>
+
+    <!-- Icon Descriptions -->
+    <string name="icon_description_wallet">Wallet</string>
 </resources>

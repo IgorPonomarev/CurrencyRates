@@ -6,5 +6,6 @@ data class AppUseCases (
     val saveFavourites: SaveFavourites,
     val setFilter: SetFilter,
     val saveMainCurrency: SaveMainCurrency,
-    val updateRates: UpdateRates
+    val updateRates: UpdateRates,
+    val filterCurrencies: FilterCurrencies
 )
