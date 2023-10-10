@@ -20,6 +20,9 @@
     <string name="apply">Apply</string>
     <string name="sort_by">SORT BY</string>
 
+    <!-- Favourites screen -->
+    <string name="nothing_here_yet">Nothing here yet…</string>
+
     <!-- Icon Descriptions -->
     <string name="icon_description_filter">filter</string>
     <string name="icon_description_arrow_dropdown">currency selector</string>

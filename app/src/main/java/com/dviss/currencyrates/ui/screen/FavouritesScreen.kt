@@ -53,12 +53,21 @@ fun FavouritesScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(16.dp)
         ) {
-            items(state.favourites) {
-                FavouritePairListItem(
-                    favouritePair = it,
-                    currencies = state.currencies,
-                ) {
-                    viewModel.removeFavouritePair(it)
+            if (state.favourites.isNotEmpty()) {
+                items(state.favourites) {
+                    FavouritePairListItem(
+                        favouritePair = it,
+                        currencies = state.currencies,
+                    ) {
+                        viewModel.removeFavouritePair(it)
+                    }
+                }
+            } else {
+                item {
+                    Text(
+                        text = stringResource(id = R.string.nothing_here_yet),
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
                 }
             }
         }
